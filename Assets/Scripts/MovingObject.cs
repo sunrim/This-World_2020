@@ -18,7 +18,10 @@ public class MovingObject : MonoBehaviour
 
     private bool canMove = true;
 
+    private Animator animator;
+
     void Start() {
+        animator = GetComponent<Animator>();
     }
 
     IEnumerator MoveCoroutine()
@@ -37,6 +40,10 @@ public class MovingObject : MonoBehaviour
 
         vector.Set(Input.GetAxisRaw("Horizontal"), transform.position.y, transform.position.z);
 
+        animator.SetFloat("DirX", vector.x);
+        animator.SetFloat("DirY", vector.y);
+        animator.SetBool("Walking", true);
+
         while (currentWalkCount < walkCount)
         {
             if (vector.x != 0)
@@ -54,6 +61,8 @@ public class MovingObject : MonoBehaviour
         }
 
         currentWalkCount = 0;
+
+        animator.SetBool("Walking", false);
         canMove = true;
     }
 
