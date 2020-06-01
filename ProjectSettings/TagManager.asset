@@ -56,3 +56,6 @@ TagManager:
   - name: Illust
     uniqueID: 670093739
     locked: 0
+  - name: UI
+    uniqueID: 3521330735
+    locked: 0

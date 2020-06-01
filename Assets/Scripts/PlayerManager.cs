@@ -21,20 +21,25 @@ public class PlayerManager : MovingObject
 
     private bool canMove = true;
 
-    void Start()
+    private void Awake()
     {
         if (instance == null)
         {
             DontDestroyOnLoad(this.gameObject);
-            boxCollider = GetComponent<BoxCollider2D>();
-            animator = GetComponent<Animator>();
-            theAudio = FindObjectOfType<AudioManager>();
             instance = this;
         }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+    void Start()
+    {
+        queue = new Queue<string>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
+        theAudio = FindObjectOfType<AudioManager>();
     }
 
     IEnumerator MoveCoroutine()
