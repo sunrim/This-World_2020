@@ -24,7 +24,7 @@ public class Item{
         itemName = _itemName;
         itemDescription = _itemDes;
         itemType =_itemType;
-        itemCount = _intCount;
+        itemCount = _itemCount;
         itemIcon = Resources.Load("ItemIcon/" + _itemID.ToString(), typeof(Sprite))as Sprite;
     }
 

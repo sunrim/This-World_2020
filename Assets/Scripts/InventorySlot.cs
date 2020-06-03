@@ -11,16 +11,8 @@ public class NewBehaviourScript : MonoBehaviour{
 
     public void Additem(Item _item)
     {
-        itemName_Text.Text = _item.itemName;
+        itemName_Text.text = _item.itemName;
         icon.sprite = _item.itemIcon;
-
-        if(Item.ItemType.Use == _item.item.Type)
-        {
-            if(_item.itemCount>0)
-                itemCount_Text.text = "x " + _item.itemCount.ToString();
-            else
-                itemCount_Text.text = "";
-        }
     }
 
     public void RemoveItem()
