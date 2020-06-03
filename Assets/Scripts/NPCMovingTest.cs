@@ -10,7 +10,7 @@ public class TestMove
     public string direction;
 }
 
-public class Test : MonoBehaviour
+public class NPCMovingTest : MonoBehaviour
 {
     //[SerializeField]
     //public TestMove[] move;

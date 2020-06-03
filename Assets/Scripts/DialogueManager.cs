@@ -62,7 +62,7 @@ public class DialogueManager : MonoBehaviour
 
         theOrder.NotMove();
 
-        for(int i = 0; i < dialogue.sentences.Length; i++)
+        for (int i = 0; i < dialogue.sentences.Length; i++)
         {
             listSentences.Add(dialogue.sentences[i]);
             listSprites.Add(dialogue.sprites[i]);
@@ -89,9 +89,9 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator StartDialogueCoroutine()
     {
-        if(count > 0)
+        if (count > 0)
         {
-            if(listDialogueWindows[count] != listDialogueWindows[count - 1])
+            if (listDialogueWindows[count] != listDialogueWindows[count - 1])
             {
                 animDialogueWindow.SetBool("Appear", false);
                 yield return new WaitForSeconds(0.2f);
@@ -101,7 +101,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                if(listSprites[count] != listSprites[count - 1])
+                if (listSprites[count] != listSprites[count - 1])
                 {
                     animDialogueWindow.SetBool("Appear", false);
                     yield return new WaitForSeconds(0.1f);
@@ -116,15 +116,16 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            yield return new WaitForSeconds(0.05f);
             rendererDialogueWindow.GetComponent<SpriteRenderer>().sprite = listDialogueWindows[count];
             rendererSprite.GetComponent<SpriteRenderer>().sprite = listSprites[count];
         }
 
         keyActivated = true;
-        for(int i = 0; i < listSentences[count].Length; i++)
+        for (int i = 0; i < listSentences[count].Length; i++)
         {
             text.text += listSentences[count][i];
-            if(i % 7 == 1)
+            if (i % 7 == 1)
             {
                 theAudio.Play(typeSound);
             }
@@ -156,6 +157,6 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
-        
+
     }
 }

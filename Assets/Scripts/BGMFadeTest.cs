@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript2 : MonoBehaviour
+public class BGMFadeTest : MonoBehaviour
 {
     BGMManager BGM;
 
