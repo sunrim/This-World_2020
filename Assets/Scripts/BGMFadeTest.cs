@@ -22,7 +22,5 @@ public class BGMFadeTest : MonoBehaviour
         BGM.FadeOutMusic();
 
         yield return new WaitForSeconds(3f);
-
-        BGM.FadeInMusic();
     }
 }
