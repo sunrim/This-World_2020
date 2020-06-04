@@ -43,6 +43,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool talking = false;
     private bool keyActivated = false;
+    private bool onlytext = false;
 
     // Start is called before the first frame update
     void Start()
@@ -56,9 +57,24 @@ public class DialogueManager : MonoBehaviour
         theOrder = FindObjectOfType<OrderManager>();
     }
 
+    public void ShowText(string[] _sentences)
+    {
+        talking = true;
+        onlytext = true;
+
+        theOrder.NotMove();
+
+        for (int i = 0; i < _sentences.Length; i++)
+        {
+            listSentences.Add(_sentences[i]);
+        }
+        StartCoroutine(StartTextCoroutine());
+    }
+
     public void ShowDialogue(Dialogue dialogue)
     {
         talking = true;
+        onlytext = false;
 
         theOrder.NotMove();
 
@@ -85,6 +101,20 @@ public class DialogueManager : MonoBehaviour
         animDialogueWindow.SetBool("Appear", false);
         talking = false;
         theOrder.Move();
+    }
+
+    IEnumerator StartTextCoroutine()
+    {
+        keyActivated = true;
+        for (int i = 0; i < listSentences[count].Length; i++)
+        {
+            text.text += listSentences[count][i];
+            if (i % 7 == 1)
+            {
+                theAudio.Play(typeSound);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     IEnumerator StartDialogueCoroutine()
@@ -153,7 +183,10 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     StopAllCoroutines();
-                    StartCoroutine(StartDialogueCoroutine());
+                    if (onlytext)
+                        StartCoroutine(StartTextCoroutine());
+                    else
+                        StartCoroutine(StartDialogueCoroutine());
                 }
             }
         }

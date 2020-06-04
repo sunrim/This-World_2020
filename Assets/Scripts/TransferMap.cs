@@ -25,8 +25,8 @@ public class TransferMap : MonoBehaviour
     {
         if(collision.gameObject.name == "Player")
         {
-            //SceneManager.LoadScene(transferMapName); 
             thePlayer.currentMapName = transferMapName;
+            theCamera.SetBound(targetBound);
             theCamera.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, theCamera.transform.position.z);
             thePlayer.transform.position = target.transform.position;
         }
