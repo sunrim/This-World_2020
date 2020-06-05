@@ -2579,6 +2579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1083033686}
   - component: {fileID: 1083033685}
+  - component: {fileID: 1083033687}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -2626,6 +2627,25 @@ Transform:
   m_Father: {fileID: 1359675310}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1083033687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083033684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b7d72fff6fe9044ac27ab32b5abf83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    sentences:
+    - "\uC131\uC8FC\uAC00 \uAE30\uB2E4\uB9AC\uACA0\uB2E4..\n\uC5BC\uB978 \uAC00\uC57C\uACA0\uC5B4!"
+    sprites:
+    - {fileID: 21300000, guid: 8ce5b6e485b923941a4d26e7fc77cac7, type: 3}
+    dialogueWindows:
+    - {fileID: 21300000, guid: 1354594526143e949897781b2a7b8a6e, type: 3}
 --- !u!1 &1106000646
 GameObject:
   m_ObjectHideFlags: 0
@@ -3907,7 +3927,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524215190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4823.825, y: -1482.4751, z: -2914.554}
+  m_LocalPosition: {x: -5306, y: -1186, z: -2914.554}
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 513172277}
@@ -3950,7 +3970,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 10}
   m_EdgeRadius: 0
 --- !u!1 &1587836968
 GameObject:
