@@ -43,6 +43,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool talking = false;
     private bool keyActivated = false;
+    private bool onlytext = false;
 
     // Start is called before the first frame update
     void Start()
@@ -56,13 +57,28 @@ public class DialogueManager : MonoBehaviour
         theOrder = FindObjectOfType<OrderManager>();
     }
 
-    public void ShowDialogue(Dialogue dialogue)
+    public void ShowText(string[] _sentences)
     {
         talking = true;
+        onlytext = true;
 
         theOrder.NotMove();
 
-        for(int i = 0; i < dialogue.sentences.Length; i++)
+        for (int i = 0; i < _sentences.Length; i++)
+        {
+            listSentences.Add(_sentences[i]);
+        }
+        StartCoroutine(StartTextCoroutine());
+    }
+
+    public void ShowDialogue(Dialogue dialogue)
+    {
+        talking = true;
+        onlytext = false;
+
+        theOrder.NotMove();
+
+        for (int i = 0; i < dialogue.sentences.Length; i++)
         {
             listSentences.Add(dialogue.sentences[i]);
             listSprites.Add(dialogue.sprites[i]);
@@ -87,11 +103,25 @@ public class DialogueManager : MonoBehaviour
         theOrder.Move();
     }
 
+    IEnumerator StartTextCoroutine()
+    {
+        keyActivated = true;
+        for (int i = 0; i < listSentences[count].Length; i++)
+        {
+            text.text += listSentences[count][i];
+            if (i % 7 == 1)
+            {
+                theAudio.Play(typeSound);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
     IEnumerator StartDialogueCoroutine()
     {
-        if(count > 0)
+        if (count > 0)
         {
-            if(listDialogueWindows[count] != listDialogueWindows[count - 1])
+            if (listDialogueWindows[count] != listDialogueWindows[count - 1])
             {
                 animDialogueWindow.SetBool("Appear", false);
                 yield return new WaitForSeconds(0.2f);
@@ -101,7 +131,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                if(listSprites[count] != listSprites[count - 1])
+                if (listSprites[count] != listSprites[count - 1])
                 {
                     animDialogueWindow.SetBool("Appear", false);
                     yield return new WaitForSeconds(0.1f);
@@ -116,15 +146,16 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            yield return new WaitForSeconds(0.05f);
             rendererDialogueWindow.GetComponent<SpriteRenderer>().sprite = listDialogueWindows[count];
             rendererSprite.GetComponent<SpriteRenderer>().sprite = listSprites[count];
         }
 
         keyActivated = true;
-        for(int i = 0; i < listSentences[count].Length; i++)
+        for (int i = 0; i < listSentences[count].Length; i++)
         {
             text.text += listSentences[count][i];
-            if(i % 7 == 1)
+            if (i % 7 == 1)
             {
                 theAudio.Play(typeSound);
             }
@@ -152,10 +183,13 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     StopAllCoroutines();
-                    StartCoroutine(StartDialogueCoroutine());
+                    if (onlytext)
+                        StartCoroutine(StartTextCoroutine());
+                    else
+                        StartCoroutine(StartDialogueCoroutine());
                 }
             }
         }
-        
+
     }
 }

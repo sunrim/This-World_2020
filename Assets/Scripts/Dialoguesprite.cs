@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestDialogue : MonoBehaviour
+public class DialogueSprite : MonoBehaviour
 {
     [SerializeField]
     public Dialogue dialogue;
