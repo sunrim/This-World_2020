@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour{
+public class NewBehaviourScript : MonoBehaviour
+{
     public Image icon;
     public Text itemName_Text;
     public Text itemCount_Text;
