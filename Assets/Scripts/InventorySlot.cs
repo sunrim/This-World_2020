@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-<<<<<<< HEAD
-public class NewBehaviourScript : MonoBehaviour
+public class InventorySlot : MonoBehaviour
 {
-=======
-public class InventorySlot : MonoBehaviour{
->>>>>>> a53f5b54ad30bb8153663a3c4fa55abb44fdf8b8
     public Image icon;
     public Text itemName_Text;
     public Text itemCount_Text;
@@ -25,5 +21,4 @@ public class InventorySlot : MonoBehaviour{
         itemName_Text.text = "";
         icon.sprite = null;
     }
- }
-
+}
