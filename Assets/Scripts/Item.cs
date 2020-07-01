@@ -24,7 +24,7 @@ public class Item{
         itemName = _itemName;
         itemDescription = _itemDes;
         itemCount = _itemCount;
-        itemIcon = Resources.Load("ItemIcon/" + _itemID.ToString(), typeof(Sprite))as Sprite;
+        itemIcon = Resources.Load("ItemIcon/" + _itemID.ToString(), typeof(Sprite)) as Sprite;
     }
 
     // Start is called before the first frame update

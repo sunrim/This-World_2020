@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     private DatabaseManager theDatabase;
     private OrderManager theOrder;
     private AudioManager theAudio;
+    private OkOrCancel theOOC;
 
     public string key_sound;
     public string enter_sound;
@@ -47,18 +48,32 @@ public class Inventory : MonoBehaviour
         theAudio = FindObjectOfType<AudioManager>();
         theOrder = FindObjectOfType<OrderManager>();
         theDatabase = FindObjectOfType<DatabaseManager>();
+        theOOC = FindObjectOfType<OkOrCancel>();
 
         inventoryItemList = new List<Item>();
         slots = tf.GetComponentsInChildren<InventorySlot>();
-        inventoryItemList.Add(new Item(00001, "망치", "무언가를 부실 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00002, "교무실 열쇠", "잠긴 곳을 열 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00003, "과학실 열쇠", "잠긴 곳을 열 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00004, "보건실 열쇠", "잠긴 곳을 열 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00005, "실습실 열쇠", "잠긴 곳을 열 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00006, "조교실 열쇠", "잠긴 곳을 열 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00007, "기사실 열쇠", "잠긴 곳을 열 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00008, "의약품", "뭐든지 치료할 수 있을 것 같다." ));
-        inventoryItemList.Add(new Item(00009, "쪽지", "누군가가 남긴 쪽지." ));
+    }
+
+    public void GetAnItem(int _itemID, int _count = 1) 
+    {
+        for(int i = 0; i< theDatabase.itemList.Count; i++) // 디비에 아이템 검색
+        {
+            if(_itemID == theDatabase.itemList[i].itemID) //데이터베이스에 아이템 발견
+            {
+                for(int j=0; j< inventoryItemList.Count; j++) // 소지품에 같은 아이템이 있는지 검색
+                {
+                    if(inventoryItemList[j].itemID == _itemID) //소지품에 같은 아이템이 있다 ->개수 증가
+                    {
+                        inventoryItemList[j].itemCount += _count;
+                        return;
+                    }
+                    inventoryItemList.Add(theDatabase.itemList[i]);
+                    return;
+                }
+                
+            }
+        }
+        Debug.LogError("DB에 업서");
     }
     
     
@@ -73,8 +88,7 @@ public class Inventory : MonoBehaviour
                 slots[i].gameObject.SetActive(true);
                 slots[i].Additem(inventoryItemList[i]);
              } // 인벤토리 탭 리스트의 내용을, 인벤토리 슬롯에 추가
-
-        Console.WriteLine(inventoryItemList.Count);
+            
         SelectedItem();
     } // 아이템 활성화 (inventoryTabList에 조건에 맞는 아이템들만 넣어주고, 인벤토리 슬롯에 출력)
 
@@ -188,7 +202,9 @@ public class Inventory : MonoBehaviour
                         }
                         else if (Input.GetKeyDown(KeyCode.Z) && !preventExec)
                         {
-
+                            
+                                StartCoroutine(OOCCoroutine("사용", "취소"));
+                          
 
 
                         }
@@ -201,5 +217,34 @@ public class Inventory : MonoBehaviour
             } // 인벤토리가 열리면 키입력처리 활성화.
         }
     }
-    
+    IEnumerator OOCCoroutine(string _up, string _down)
+    {
+        theAudio.Play(enter_sound);
+        stopKeyInput = true;
+
+        go_OOC.SetActive(true);
+        theOOC.ShowTwoChoice(_up, _down);
+
+        yield return new WaitUntil(() => !theOOC.activated);
+        if (theOOC.GetResult())
+        {
+            for (int i = 0; i < inventoryItemList.Count; i++)
+            {
+                
+                        if (inventoryItemList[i].itemCount > 1)
+                            inventoryItemList[i].itemCount--;
+                        else
+                            inventoryItemList.RemoveAt(i);
+
+                        // theAudio.Play() // 아이템 먹는 소리 출력.
+
+                        ShowItem();
+                        break;
+                
+            }
+        }
+        stopKeyInput = false;
+        go_OOC.SetActive(false);
+    }
+
 }
