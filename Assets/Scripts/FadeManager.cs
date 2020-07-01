@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class FadeManager : MonoBehaviour
 {
     public SpriteRenderer white;
     public SpriteRenderer black;
@@ -13,6 +13,7 @@ public class NewBehaviourScript : MonoBehaviour
     
     public void FadeOut(float _speed = 0.02f)
     {
+        StopAllCoroutines();
         StartCoroutine(FadeOutCoroutine(_speed));
     }
 
@@ -30,6 +31,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void FadeIn(float _speed = 0.02f)
     {
+        StopAllCoroutines();
         StartCoroutine(FadeInCoroutine(_speed));
     }
 
